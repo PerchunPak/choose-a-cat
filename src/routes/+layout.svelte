@@ -1,10 +1,12 @@
 <script lang="ts">
   import "../app.css";
+  import { Toaster } from "svelte-sonner";
   import Header from "./Header.svelte";
 
   let { children } = $props();
 </script>
 
+<Toaster richColors />
 <div class="grid grid-rows-[auto_1fr_auto]">
   <Header />
   <main
