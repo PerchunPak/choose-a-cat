@@ -1,6 +1,9 @@
 <script lang="ts">
   import { AppBar } from "@skeletonlabs/skeleton-svelte";
-  import { CreditCard, LogIn, User } from "lucide-svelte";
+  import { LogIn, User, LogOut } from "lucide-svelte";
+  import { authClient } from "$lib/auth";
+
+  const session = authClient.useSession();
 </script>
 
 <AppBar
@@ -12,12 +15,24 @@
   trailSpaceX=""
   trailClasses="hidden lg:flex min-h-full items-center gap-2"
 >
-  {#snippet lead()}
-    <a href="/" class="type-title preset-tonal-surface-500 btn !type-scale-6"
-      >Choose A Cat</a
-    >
-  {/snippet}
+  {#snippet lead()}{/snippet}
   {#snippet trail()}
-    lox
+    {#if $session.data}
+      <p>{$session.data.user.name}</p>
+      <a href="/account" class="btn-icon preset-outlined-surface-500">
+        <User size={20} />
+      </a>
+      <button
+        type="button"
+        class="btn-icon preset-outlined-success-500"
+        onclick={() => authClient.signOut()}
+      >
+        <LogOut size={20} />
+      </button>
+    {:else}
+      <a href="/sign-up" class="btn-icon preset-outlined-surface-500">
+        <LogIn size={20} />
+      </a>
+    {/if}
   {/snippet}
 </AppBar>
