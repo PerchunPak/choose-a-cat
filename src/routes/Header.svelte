@@ -1,6 +1,6 @@
 <script lang="ts">
   import { AppBar } from "@skeletonlabs/skeleton-svelte";
-  import { LogIn, User, LogOut } from "lucide-svelte";
+  import { LogIn, Upload, LogOut } from "lucide-svelte";
   import { authClient } from "$lib/auth";
 
   const session = authClient.useSession();
@@ -19,8 +19,8 @@
   {#snippet trail()}
     {#if $session.data}
       <p>{$session.data.user.name}</p>
-      <a href="/account" class="btn-icon preset-outlined-surface-500">
-        <User size={20} />
+      <a href="/upload" class="btn-icon preset-outlined-surface-500">
+        <Upload size={20} />
       </a>
       <button
         type="button"
