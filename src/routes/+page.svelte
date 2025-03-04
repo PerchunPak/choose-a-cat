@@ -1,24 +1,40 @@
 <script lang="ts">
   import { Image } from "@unpic/svelte";
   import Keybinds from "./Keybinds.svelte";
+  import type { image } from "$lib/server/db/schema";
+  import { toast } from "svelte-sonner";
 
-  const url = "https://cataas.com/cat";
-  let reloads = $state(0);
+  const { data } = $props();
 
-  function onevent() {
-    reloads += 1;
+  let images: (typeof image)[] = $state(data.images);
+
+  function onChose(variant: "left" | "right"): void {
+    fetch("/api/choose", {
+      method: "POST",
+      body: JSON.stringify({
+        variant,
+        left: images[0].id,
+        right: images[1].id,
+      }),
+    })
+      .then(async (res) => {
+        images = await res.json();
+      })
+      .catch((e) => toast.error(e as string));
+    images = [];
   }
 </script>
 
-<Keybinds onReload={onevent} onLeft={onevent} onRight={onevent} />
-
-{#snippet img(src: string, alt: string)}
-  <div class="flex h-fit w-fit place-content-center rounded border p-4">
-    <Image {src} {alt} layout="fullWidth" />
-  </div>
-{/snippet}
+<Keybinds onLeft={() => onChose("left")} onRight={() => onChose("right")} />
 
 <div class="grid max-h-screen grid-cols-2 space-x-4">
-  {@render img(url + "?".repeat(reloads), "cat1")}
-  {@render img(url + "?".repeat(reloads + 1), "cat1")}
+  {#each images as image}
+    <div class="flex h-fit w-fit place-content-center rounded border p-4">
+      <Image src={`/image/${image.id}`} alt="cat" layout="fullWidth" />
+    </div>
+  {/each}
+  {#if images.length === 0}
+    <div class="flex h-fit w-fit place-content-center rounded border p-4"></div>
+    <div class="flex h-fit w-fit place-content-center rounded border p-4"></div>
+  {/if}
 </div>

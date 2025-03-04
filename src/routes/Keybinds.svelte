@@ -2,22 +2,15 @@
   type Callback = () => void;
 
   let {
-    onReload,
     onRight,
     onLeft,
   }: {
-    onReload: Callback;
     onRight: Callback;
     onLeft: Callback;
   } = $props();
 
   function handleKeyPress(event: KeyboardEvent): void {
     switch (event.key) {
-      case "r":
-        onReload();
-        event.preventDefault();
-        break;
-
       case "ArrowRight":
         onRight();
         event.preventDefault();
