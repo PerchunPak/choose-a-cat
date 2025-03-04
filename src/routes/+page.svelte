@@ -27,14 +27,14 @@
 
 <Keybinds onLeft={() => onChose("left")} onRight={() => onChose("right")} />
 
-<div class="grid max-h-screen grid-cols-2 space-x-4">
+<div class="grid max-h-screen grid-cols-2 gap-4">
   {#each images as image}
     <div class="flex h-fit w-fit place-content-center rounded border p-4">
       <Image src={`/image/${image.id}`} alt="cat" layout="fullWidth" />
     </div>
   {/each}
   {#if images.length === 0}
-    <div class="flex h-fit w-fit place-content-center rounded border p-4"></div>
-    <div class="flex h-fit w-fit place-content-center rounded border p-4"></div>
+    <div class="placeholder m-4 flex h-screen w-full animate-pulse"></div>
+    <div class="placeholder m-4 flex h-screen w-full animate-pulse"></div>
   {/if}
 </div>
