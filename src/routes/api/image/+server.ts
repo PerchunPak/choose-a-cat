@@ -22,7 +22,7 @@ export const POST: RequestHandler = async ({ request }) => {
   }
 
   const id = crypto.randomUUID();
-  await Bun.write(`${env.DATA_DIR}/${id}.img`, content);
+  await Bun.write(`${env.IMAGES_DIR}/${id}`, content);
   await db.insert(schemas.image).values({
     id,
     uploadedBy: session.user.id,
