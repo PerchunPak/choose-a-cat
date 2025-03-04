@@ -3,7 +3,28 @@ import {
   text,
   timestamp,
   boolean,
+  serial,
 } from "drizzle-orm/pg-core";
+
+export const comparison = pgTable("comparison", {
+  id: serial("id").primaryKey(),
+  user: text("user")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  result: boolean("result").notNull(),
+  a: text("a").references(() => image.id, { onDelete: "restrict" }),
+  b: text("b").references(() => image.id, { onDelete: "restrict" }),
+});
+
+export const image = pgTable("image", {
+  id: text("id").primaryKey(),
+  uploadedBy: text("uploadedBy")
+    .notNull()
+    .references(() => user.id, { onDelete: "restrict" }),
+  hash: text("hash").notNull(),
+});
+
+/*** BetterAuth ***/
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -54,3 +75,5 @@ export const verification = pgTable("verification", {
   createdAt: timestamp("created_at"),
   updatedAt: timestamp("updated_at"),
 });
+
+/*** BetterAuth ***/
