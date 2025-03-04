@@ -3,7 +3,7 @@ import type { RequestHandler } from "./$types";
 import { db } from "$lib/server/db";
 import * as schemas from "$lib/server/db/schema";
 import { auth } from "$lib/auth.server";
-import { getRandomImages } from "$lib";
+import { getTwoRandomImages } from "$lib";
 
 interface RequestData {
   variant: "left" | "right";
@@ -23,5 +23,5 @@ export const POST: RequestHandler = async ({ request }) => {
     result: content.variant === "left",
   });
 
-  return json(await getRandomImages(2));
+  return json(await getTwoRandomImages(session.user.id));
 };
