@@ -36,7 +36,7 @@
         bind:value={password}
       />
     </label>
-    <a href="/sign-up" class="font-xs anchor">I already have an account</a>
+    <a href="/login" class="font-xs anchor">I already have an account</a>
     <button
       type="button"
       class="btn preset-filled"

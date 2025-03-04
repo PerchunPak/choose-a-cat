@@ -1,10 +1,4 @@
-import {
-  pgTable,
-  text,
-  timestamp,
-  boolean,
-  serial,
-} from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, serial } from "drizzle-orm/pg-core";
 
 export const comparison = pgTable("comparison", {
   id: serial("id").primaryKey(),
